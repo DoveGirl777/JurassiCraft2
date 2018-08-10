@@ -21,14 +21,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class HeliRenderer extends HelicopterRenderer<HelicopterEntity> {
+public class HeliRenderer extends HelicopterRenderer {
 
     public HeliRenderer(RenderManager manager) {
-        super(manager, "helicopter");
     }
 
-    @Override
-    protected HelicopterAnimator createHeliAnimator() {
-        return new HelicopterAnimator();
-    }
 }

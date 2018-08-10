@@ -1,7 +1,10 @@
 package org.jurassicraft.server.entity.vehicle;
 
 
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.model.b3d.B3DModel;
 import net.minecraftforge.server.permission.context.ContextKeys;
 import org.jurassicraft.server.event.KeyBindingHandler;
@@ -32,7 +35,11 @@ public class HelicopterEntity extends CarEntity {
     private static final float SPEEDMODIFIER = 2.5f;
     private static boolean isFlying;
     public float rotorRotationAmount;
-
+    public final InterpValue interpRotationPitch = new InterpValue(this, 0.25D);
+    public final InterpValue interpRotationRoll = new InterpValue(this, 0.25D);
+    private MutableVec3 direction;
+    public float rotationAmount;
+    private static final float MAXMOVEMENTROTATION = 15f;
     /* =================================== CAR START ===========================================*/
 
     public HelicopterEntity(World worldIn) {
@@ -44,6 +51,7 @@ public class HelicopterEntity extends CarEntity {
         this.setSize(4f, 3.5f);
         this.speedModifier = 1.5f;
         this.isFlying = false;
+        this.direction = new MutableVec3(0,1,0);
     }
 
     @Override
@@ -53,7 +61,7 @@ public class HelicopterEntity extends CarEntity {
 
     @Override
     protected Seat[] createSeats() {
-        Seat middle = new Seat(0F, -0.362F, 1.2F, 0.5F, 0.25F);
+        Seat middle = new Seat(0F, -0.23F, 1.2F, 0.5F, 0.25F);
         Seat frontLeft = new Seat(-0.55F, -0.34F, 0.1F, 0.5F, 0.25F);
         Seat frontRight = new Seat(0.55F, -0.34F, 0.1F, 0.5F, 0.25F);
         Seat backLeft = new Seat( 0.4F, 0.25F, -1F, 0.5F, 0.25F);
@@ -95,13 +103,43 @@ public class HelicopterEntity extends CarEntity {
     @Override
     public void onEntityUpdate() {
         super.onEntityUpdate();
+        if (this.forward()) {
+            this.rotationAmount += 1f;
+        } else if (this.backward()) {
+            this.rotationAmount -= 1f;
+        }else{
+            if(this.rotationAmount < 0f){
+                this.rotationAmount += 1f;
+            }else if(this.rotationAmount >0f){
+                this.rotationAmount -= 1f;
+            }
+        }
+/*
+        if(!(this.forward())){
+            this.rotationAmount -=1f;
+            if(this.rotationAmount <=0f)
+                this.rotationAmount = 0f;
+        }else if(!this.backward()){
+            this.rotationAmount += 1f;
+            if(this.rotationAmount >= 0f)
+                this.rotationAmount = 0f;
+        }
+        */
+        if(this.rotationAmount >= MAXMOVEMENTROTATION){
+            this.rotationAmount = MAXMOVEMENTROTATION;
+        }
+        if(this.rotationAmount <= -MAXMOVEMENTROTATION){
+            this.rotationAmount = -MAXMOVEMENTROTATION;
+        }
+
         rotationYawInterp.reset(this.rotationYaw - 180D);
         if (forward()) {
             lastDirBackwards = false;
         } else if (backward()) {
             lastDirBackwards = true;
         }
-
+        this.interpRotationPitch.setTarget(this.direction.zCoord * -30D);
+        this.interpRotationRoll.setTarget(this.direction.xCoord * 20D);
         if (this.seats[0].getOccupant() != null) {
             if (KeyBindingHandler.HELICOPTER_UP.isKeyDown()) {
                 this.motionY += 0.2f;
@@ -180,6 +218,32 @@ public class HelicopterEntity extends CarEntity {
     protected boolean shouldTyresRender() {
         return false;
     }
+    @Override
+    public void updatePassenger(Entity passenger) {
+        if (this.isPassenger(passenger)) {
+            Seat seat = null;
+            for (Seat s : this.seats) {
+                if (passenger.equals(s.getOccupant())) {
+                    seat = s;
+                    break;
+                }
+            }
+            Vec3d pos;
+            if (seat == null) {
+                pos = new Vec3d(this.posX, this.posY + this.height, this.posZ);
+            } else {
+                pos = seat.getPos();
+            }
+            passenger.setPosition(pos.x, pos.y + this.interpRotationPitch.getCurrent() / 75D, pos.z);
+            passenger.rotationYaw += this.rotationDelta;
+            passenger.setRotationYawHead(passenger.getRotationYawHead() + this.rotationDelta);
+            if (passenger instanceof EntityLivingBase) {
+                EntityLivingBase living = (EntityLivingBase) passenger;
+                living.renderYawOffset += (living.rotationYaw - living.renderYawOffset) * 0.6F;
+            }
+        }
+    }
+
 /*
     @Override
 

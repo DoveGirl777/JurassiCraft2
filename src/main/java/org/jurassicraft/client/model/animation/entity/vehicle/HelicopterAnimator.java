@@ -3,6 +3,7 @@ package org.jurassicraft.client.model.animation.entity.vehicle;
 import net.ilexiconn.llibrary.client.model.tabula.ITabulaModelAnimator;
 import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.entity.vehicle.HelicopterEntity;
@@ -19,16 +20,14 @@ public class HelicopterAnimator implements ITabulaModelAnimator<HelicopterEntity
         rotAmount += (entity.rotorRotationAmount) / 2D;
         rotor.rotateAngleY = (float) rotAmount;
         tailrotor.rotateAngleX = (float) rotAmount;
-
         AdvancedModelRenderer ctrl1 = model.getCube("controlstick1");
         AdvancedModelRenderer ctrl2 = model.getCube("controlstick2");
-
         //if (entity.isEngineRunning()) {
          //   ctrl1.offsetY = 0.01F;
          //   ctrl2.offsetY = -0.01F;
        //}
 
-        //ctrl1.rotateAngleX = (float) Math.toRadians(entity.interpRotationPitch.getValueForRendering(partialTicks) * -1F);
-        //ctrl1.rotateAngleZ = (float) Math.toRadians(entity.interpRotationRoll.getValueForRendering(partialTicks) * 1F);
+        ctrl1.rotateAngleX = (float) Math.toRadians(entity.interpRotationPitch.getValueForRendering(partialTicks) * -1F);
+        ctrl1.rotateAngleZ = (float) Math.toRadians(entity.interpRotationRoll.getValueForRendering(partialTicks) * 1F);
     }
 }
