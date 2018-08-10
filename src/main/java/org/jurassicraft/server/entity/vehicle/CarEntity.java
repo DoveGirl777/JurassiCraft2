@@ -53,10 +53,10 @@ public abstract class CarEntity extends Entity implements MultiSeatedEntity {
     public static final DataParameter<ItemStack> RECORD_ITEM = EntityDataManager.createKey(CarEntity.class, DataSerializers.ITEM_STACK);
 
     public static final float MAX_HEALTH = 40;
-    public static final int LEFT     = 0b0001;
-    public static final int RIGHT    = 0b0010;
-    public static final int FORWARD  = 0b0100;
-    public static final int BACKWARD = 0b1000;
+    private static final int LEFT     = 0b0001;
+    private static final int RIGHT    = 0b0010;
+    private static final int FORWARD  = 0b0100;
+    private static final int BACKWARD = 0b1000;
 
     protected final Seat[] seats = createSeats();
     protected final WheelData wheeldata = createWheels();
