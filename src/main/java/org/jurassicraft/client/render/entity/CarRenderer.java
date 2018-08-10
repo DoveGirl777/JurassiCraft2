@@ -13,6 +13,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.ResetControlTabulaModel;
 import org.jurassicraft.client.model.TabulaModelUV;
 import org.jurassicraft.client.model.animation.entity.vehicle.CarAnimator;
+import org.jurassicraft.client.model.animation.entity.vehicle.HelicopterAnimator;
 import org.jurassicraft.server.entity.ai.util.MathUtils;
 import org.jurassicraft.server.entity.vehicle.CarEntity;
 
@@ -36,9 +37,8 @@ public abstract class CarRenderer<E extends CarEntity> extends Render<E> {
 
 
     protected final String carName;
-    protected final ResourceLocation texture;
-
     protected CarAnimator animator;
+    protected final ResourceLocation texture;
     protected TabulaModel baseModel;
     protected TabulaModel destroyModel;
 
