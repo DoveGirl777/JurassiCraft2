@@ -1,10 +1,13 @@
 package org.jurassicraft.server.entity.vehicle;
 
 
+import net.minecraft.block.BlockAir;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.client.model.BlockStateLoader;
 import net.minecraftforge.client.model.b3d.B3DModel;
 import net.minecraftforge.server.permission.context.ContextKeys;
 import org.jurassicraft.server.event.KeyBindingHandler;
@@ -31,9 +34,11 @@ public class HelicopterEntity extends CarEntity {
     private static final float MAX_POWER = 80.0F;
     private static final float REQUIRED_POWER = MAX_POWER / 2.0F;
     private float enginePower;
+    public float gearLift;
+    public boolean shouldGearLift = true;
     private final InterpValue rotationYawInterp = new InterpValue(this, 4f);
     private static final float SPEEDMODIFIER = 2.5f;
-    private static boolean isFlying;
+    public boolean isFlying;
     public float rotorRotationAmount;
     public final InterpValue interpRotationPitch = new InterpValue(this, 0.25D);
     public final InterpValue interpRotationRoll = new InterpValue(this, 0.25D);
@@ -174,6 +179,18 @@ public class HelicopterEntity extends CarEntity {
             this.rotorRotationAmount -= 0.2f;
         }else{
             this.speedModifier = 1.5f;
+
+
+        }
+        if(!this.shouldGearLift) {
+            this.gearLift += 0.02f;
+        }else{
+            this.gearLift -= 0.02f;
+        }
+        if(world.getBlockState(new BlockPos.MutableBlockPos((int)Math.floor( this.posX), (int)Math.floor( this.posY - 10f), (int)Math.floor( this.posZ))).getBlock() != Blocks.AIR){
+            this.shouldGearLift = false;
+        }else{
+            this.shouldGearLift = true;
         }
         if(this.seats[0].getOccupant() == null){
             this.setNoGravity(false);
@@ -181,7 +198,12 @@ public class HelicopterEntity extends CarEntity {
         if(this.rotorRotationAmount < 0f){
             this.rotorRotationAmount = 0f;
         }
-
+        if(this.gearLift < -0.5f){
+            this.gearLift = -0.5f;
+        }
+        if(this.gearLift > 0){
+            this.gearLift = 0f;
+        }
     }
 
     @Override
