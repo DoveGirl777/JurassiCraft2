@@ -12,7 +12,7 @@
 12) Tire tracks are hella fucked up, should probably be thinner? and have 3 not 2?-DONE KINDA BUT REALLY I DID A WORKAROUND
 13) Add "steam" particles (ones that come out of fire) come out of the exhaust-TO BE DONE
 14) Hitbox is sorta off (can it rotate with helicopter?)-TO BE DONE
-15) Should tilt when "strafing" to the sides-TO BE DONE
+15) Should tilt when "strafing" to the sides-DONE
 16) Should be damaged when hitting the ground once player leaves (but not destroy)-TO BE DONE
 17) Wheels should spin when on the ground-TO BE DONE
 18) When the helicopter is off the ground, then the wheels should fold ("animate") up into the wheel wells-DONE

@@ -44,6 +44,7 @@ public class HelicopterEntity extends CarEntity {
     public final InterpValue interpRotationRoll = new InterpValue(this, 0.25D);
     private MutableVec3 direction;
     public float rotationAmount;
+    public float sideRotationAmount;
     private static final float MAXMOVEMENTROTATION = 15f;
     /* =================================== CAR START ===========================================*/
 
@@ -119,6 +120,17 @@ public class HelicopterEntity extends CarEntity {
                 this.rotationAmount -= 1f;
             }
         }
+        if (this.left()) {
+            this.sideRotationAmount += 1f;
+        } else if (this.right()) {
+            this.sideRotationAmount -= 1f;
+        }else{
+            if(this.sideRotationAmount < 0f){
+                this.sideRotationAmount += 1f;
+            }else if(this.sideRotationAmount > 0f){
+                this.sideRotationAmount -= 1f;
+            }
+        }
 /*
         if(!(this.forward())){
             this.rotationAmount -=1f;
@@ -135,6 +147,12 @@ public class HelicopterEntity extends CarEntity {
         }
         if(this.rotationAmount <= -MAXMOVEMENTROTATION){
             this.rotationAmount = -MAXMOVEMENTROTATION;
+        }
+        if(this.sideRotationAmount >= MAXMOVEMENTROTATION){
+            this.sideRotationAmount = MAXMOVEMENTROTATION;
+        }
+        if(this.sideRotationAmount <= -MAXMOVEMENTROTATION){
+            this.sideRotationAmount = -MAXMOVEMENTROTATION;
         }
 
         rotationYawInterp.reset(this.rotationYaw - 180D);

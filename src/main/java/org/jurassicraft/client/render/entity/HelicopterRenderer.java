@@ -84,6 +84,7 @@ public abstract class HelicopterRenderer<E extends HelicopterEntity> extends Ren
         GlStateManager.translate((float) x, (float) y + 1.25F, (float) z);
         GlStateManager.rotate(180 - yaw, 0, 1, 0);
         GlStateManager.rotate(entity.rotationAmount, -1f, 0f, 0f);
+        GlStateManager.rotate(entity.sideRotationAmount, 0f, 0f, 1f);
         GlStateManager.scale(-1, -1, 1);
         (destroy ? this.destroyModel : this.baseModel).render(entity, 0, 0, 0, 0, 0, 0.0625F);
         GlStateManager.popMatrix();
