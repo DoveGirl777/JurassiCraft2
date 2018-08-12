@@ -1,5 +1,5 @@
 1) When Broken, Turns into a Ford Explorer-DONE
-2) Needs Animations (can probably resuse Wyns)-TO BE DONE
+2) Needs Animations (can probably resuse Wyns)-DONE
 3) Needs destroy thing like the jeep (gets cracked as you hit it)-DONE
 4) Needs to fall to the ground once driver exists-DONE
 5) Seat needs to be in correct Position-TO BE DONE
@@ -15,7 +15,7 @@
 15) Should tilt when "strafing" to the sides-TO BE DONE
 16) Should be damaged when hitting the ground once player leaves (but not destroy)-TO BE DONE
 17) Wheels should spin when on the ground-TO BE DONE
-18) When the helicopter is off the ground, then the wheels should fold ("animate") up into the wheel wells-TO BE DONE
+18) When the helicopter is off the ground, then the wheels should fold ("animate") up into the wheel wells-DONE
 19) Give the helicopter the correct hitbox size-TO BE DONE
 20) Fix bug where heli will drop outta the sky-TO BE DONE
 21) Fix bug where the heli will tilt even when on the ground-TO BE DONE
