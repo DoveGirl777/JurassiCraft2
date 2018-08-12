@@ -1,76 +1,118 @@
 package org.jurassicraft.client.render.entity;
 
-import com.google.common.collect.Maps;
+import java.util.stream.IntStream;
+
+import javax.annotation.Nullable;
+import javax.vecmath.Vector2d;
+import javax.vecmath.Vector4d;
+
 import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
+import net.minecraft.client.renderer.RenderHelper;
+import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.model.ResetControlTabulaModel;
+import org.jurassicraft.client.model.TabulaModelUV;
+import org.jurassicraft.client.model.animation.entity.vehicle.CarAnimator;
+import org.jurassicraft.client.model.animation.entity.vehicle.HelicopterAnimator;
+import org.jurassicraft.server.entity.ai.util.MathUtils;
+import org.jurassicraft.server.entity.vehicle.CarEntity;
+
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.model.animation.entity.vehicle.HelicopterAnimator;
 import org.jurassicraft.server.entity.vehicle.HelicopterEntity;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
-import org.lwjgl.opengl.GL11;
-
-import java.util.Map;
 
 @SideOnly(Side.CLIENT)
-public class HelicopterRenderer implements IRenderFactory<HelicopterEntity> {
-    @Override
-    public Render<? super HelicopterEntity> createRenderFor(RenderManager manager) {
-        return new Renderer(manager);
+public abstract class HelicopterRenderer<E extends HelicopterEntity> extends Render<E> {
+    private static final ResourceLocation[] DESTROY_STAGES = IntStream.range(0, 10)
+            .mapToObj(n -> new ResourceLocation(String.format("textures/blocks/destroy_stage_%d.png", n)))
+            .toArray(ResourceLocation[]::new);
+
+
+
+    protected final String carName;
+    protected HelicopterAnimator animator;
+    protected final ResourceLocation texture;
+    protected TabulaModel baseModel;
+    protected TabulaModel destroyModel;
+
+    protected HelicopterRenderer(RenderManager renderManager, String carName) {
+        super(renderManager);
+        this.carName = carName;
+        this.animator = createCarAnimator();
+        texture = new ResourceLocation(JurassiCraft.MODID, "textures/entities/" + carName + "/" + carName + ".png");
+        try {
+            TabulaModelContainer container = TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/entities/" + carName + "/" + carName + ".tbl");
+            this.baseModel = new TabulaModel(container, animator);
+            this.destroyModel = new TabulaModel(new TabulaModelUV(container, 16, 16), animator);
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to load car " + carName,e);
+        }
+
     }
 
-    public static class Renderer extends Render<HelicopterEntity> {
-        private static final ResourceLocation TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/entities/helicopter/helicopter.png");
-        private final Map<String, TabulaModel> moduleMap;
-        private final Map<String, ResourceLocation> moduleTextures;
-        private TabulaModel baseModel;
-
-        public Renderer(RenderManager manager) {
-            super(manager);
-            this.moduleMap = Maps.newHashMap();
-            this.moduleTextures = Maps.newHashMap();
-            try {
-                this.baseModel = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/entities/helicopter/helicopter"), new HelicopterAnimator());
-
-                // Modules init.
-            } catch (Exception e) {
-                JurassiCraft.getLogger().fatal("Failed to load the models for the Helicopter", e);
-            }
+    @Override
+    public void doRender(E entity, double x, double y, double z, float yaw, float partialTicks) {
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        this.bindEntityTexture(entity);
+        this.renderModel(entity, x, y, z, yaw, partialTicks, false);
+        int destroyStage = Math.min(10, (int) (10 - (entity.getHealth() / CarEntity.MAX_HEALTH) * 10)) - 1;
+        if (destroyStage >= 0) {
+            GlStateManager.color(1, 1, 1, 0.5F);
+            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.DST_COLOR, GlStateManager.DestFactor.SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.doPolygonOffset(-3, -3);
+            GlStateManager.enablePolygonOffset();
+            RenderHelper.disableStandardItemLighting();
+            this.bindTexture(DESTROY_STAGES[destroyStage]);
+            this.renderModel(entity, x, y, z, yaw, partialTicks, true);
+            GlStateManager.doPolygonOffset(0, 0);
+            GlStateManager.disablePolygonOffset();
+            RenderHelper.enableStandardItemLighting();
         }
+        GlStateManager.disableBlend();
+        super.doRender(entity, x, y, z, yaw, partialTicks);
+    }
 
-        @Override
-        public void doRender(HelicopterEntity helicopter, double x, double y, double z, float yaw, float partialTicks) {
-            GlStateManager.pushMatrix();
-            GlStateManager.translate((float) x, (float) y + 1.5F, (float) z);
-            GlStateManager.rotate(180.0F - yaw, 0.0F, 1.0F, 0.0F);
-            GlStateManager.rotate((float) helicopter.interpRotationPitch.getValueForRendering(partialTicks), 1.0F, 0.0F, 0.0F);
-            GlStateManager.rotate((float) helicopter.interpRotationRoll.getValueForRendering(partialTicks), 0.0F, 0.0F, 1.0F);
-            GlStateManager.rotate(helicopter.rotationAmount, -1f, 0f, 0f);
-            float f4 = 1f;
-            GlStateManager.scale(f4, f4, f4);
-            GlStateManager.scale(1.0F / f4, 1.0F / f4, 1.0F / f4);
-            this.bindEntityTexture(helicopter);
-            GlStateManager.scale(-1.0F, -1.0F, 1.0F);
-            GL11.glEnable(GL11.GL_BLEND);
-            GL11.glDisable(GL11.GL_ALPHA_TEST);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            this.baseModel.render(helicopter, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+    protected void renderModel(E entity, double x, double y, double z, float yaw, float partialTicks, boolean destroy) {
+        GlStateManager.pushMatrix();
+        GlStateManager.translate((float) x, (float) y + 1.25F, (float) z);
+        GlStateManager.rotate(180 - yaw, 0, 1, 0);
+        GlStateManager.rotate(entity.rotationAmount, -1f, 0f, 0f);
+        GlStateManager.scale(-1, -1, 1);
+        (destroy ? this.destroyModel : this.baseModel).render(entity, 0, 0, 0, 0, 0, 0.0625F);
+        GlStateManager.popMatrix();
+    }
 
-            GL11.glDisable(GL11.GL_BLEND);
-            GL11.glEnable(GL11.GL_ALPHA_TEST);
-            GlStateManager.popMatrix();
-            super.doRender(helicopter, x, y, z, yaw, partialTicks);
+    protected void doCarRotations(E entity, float partialTicks) {
+        if(!(entity instanceof HelicopterEntity)) {
+            double backValue = entity.backValue.getValueForRendering(partialTicks);
+            double frontValue = entity.frontValue.getValueForRendering(partialTicks);
+            double leftValue = entity.leftValue.getValueForRendering(partialTicks);
+            double rightValue = entity.rightValue.getValueForRendering(partialTicks);
+
+            Vector4d vec = entity.getCarDimensions();
+            Vector2d rot = entity.getBackWheelRotationPoint();
+
+            GlStateManager.translate(0, rot.x, rot.y);
+            float localRotationPitch = (float) MathUtils.cosineFromPoints(new Vec3d(frontValue, 0, vec.w), new Vec3d(backValue, 0, vec.w), new Vec3d(backValue, 0, vec.y));//No need for cosine as is a right angled triangle. I'm to lazy to work out the right maths. //TODO: SOHCAHTOA this
+            GlStateManager.rotate(frontValue < backValue ? -localRotationPitch : localRotationPitch, 1, 0, 0);
+            GlStateManager.translate(0, -rot.x, -rot.y);
+            float localRotationRoll = (float) MathUtils.cosineFromPoints(new Vec3d(rightValue, 0, vec.z), new Vec3d(leftValue, 0, vec.z), new Vec3d(leftValue, 0, vec.x));//TODO: same as above
+            GlStateManager.rotate(leftValue < rightValue ? localRotationRoll : -localRotationRoll, 0, 0, 1);
         }
+    }
 
+    protected abstract HelicopterAnimator createCarAnimator();
 
-        @Override
-        protected ResourceLocation getEntityTexture(HelicopterEntity entity) {
-            return TEXTURE;
-        }
+    @Nullable
+    @Override
+    protected ResourceLocation getEntityTexture(E entity) {
+        return this.texture;
     }
 }

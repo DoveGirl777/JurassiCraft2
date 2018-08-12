@@ -24,6 +24,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class HeliRenderer extends HelicopterRenderer {
 
     public HeliRenderer(RenderManager manager) {
+        super(manager, "helicopter");
     }
 
+    @Override
+    protected HelicopterAnimator createCarAnimator() {
+        return new HelicopterAnimator();
+    }
 }

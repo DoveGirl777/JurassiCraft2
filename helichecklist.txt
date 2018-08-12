@@ -1,9 +1,9 @@
 1) When Broken, Turns into a Ford Explorer-DONE
 2) Needs Animations (can probably resuse Wyns)-TO BE DONE
-3) Needs destroy thing like the jeep (gets cracked as you hit it)-WHO NEEDS IT
+3) Needs destroy thing like the jeep (gets cracked as you hit it)-DONE
 4) Needs to fall to the ground once driver exists-DONE
 5) Seat needs to be in correct Position-TO BE DONE
-6) Should tilt forward when going forward-TO BE DONE
+6) Should tilt forward when going forward-DONE
 7) Needs 5 Seats, 1 Driver, 2 hanging feet out the side doors, 2 on the back "crates" or wheel wells?-TO BE DONE
 8) It's slow as fuck-DONE
 9) Should destroy leaves on contact-DONE

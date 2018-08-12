@@ -44,10 +44,10 @@ public class HelicopterEntity extends CarEntity {
 
     public HelicopterEntity(World worldIn) {
         super(worldIn);
-        double w = 3f; // width in blocks
+        double w = 5f; // width in blocks
         double h = 3.5f; // height in blocks
         double d = 8f; // depth in blocks
-        this.setEntityBoundingBox(new AxisAlignedBB( 0, 0, 0, w, h, d));
+        this.setEntityBoundingBox(new AxisAlignedBB( 5, 0, 0, w, h, d));
         this.setSize(4f, 3.5f);
         this.speedModifier = 1.5f;
         this.isFlying = false;
