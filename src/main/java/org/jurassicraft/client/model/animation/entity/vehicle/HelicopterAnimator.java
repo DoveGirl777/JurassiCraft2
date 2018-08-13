@@ -20,9 +20,8 @@ public class HelicopterAnimator implements ITabulaModelAnimator<HelicopterEntity
     public void setRotationAngles(TabulaModel model, HelicopterEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks) {
         AdvancedModelRenderer rotor = model.getCube("rotorbase_rotatehere");
         AdvancedModelRenderer tailrotor = model.getCube("tailrotor_rotatehere");
-        rotAmount += (entity.rotorRotationAmount) / 2D;
-        rotor.rotateAngleY = (float) rotAmount;
-        tailrotor.rotateAngleX = (float) rotAmount;
+        rotor.rotateAngleY = entity.rotorRotationAmount / 2F;
+        tailrotor.rotateAngleX = entity.rotorRotationAmount / 2F;
         AdvancedModelRenderer ctrl1 = model.getCube("controlstick1");
         AdvancedModelRenderer ctrl2 = model.getCube("controlstick2");
         AdvancedModelRenderer gearL1 = model.getCube("gearL1");
@@ -32,9 +31,6 @@ public class HelicopterAnimator implements ITabulaModelAnimator<HelicopterEntity
         AdvancedModelRenderer gearFront = model.getCube("gearFront1");
         AdvancedModelRenderer exhaustL = model.getCube("body79");
         AdvancedModelRenderer exhaustR = model.getCube("body80");
-        System.out.println(exhaustL.defaultPositionX);
-        System.out.println(exhaustL.defaultPositionY);
-        System.out.println(exhaustL.defaultPositionZ);
 
         //if (entity.isEngineRunning()) {
          //   ctrl1.offsetY = 0.01F;

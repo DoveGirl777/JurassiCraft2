@@ -32,13 +32,13 @@ public class HelicopterEntity extends CarEntity {
     private BlockPos prevPos = INACTIVE;
 
     private boolean lastDirBackwards;
-    private static final float MAX_POWER = 80.0F;
-    private static final float REQUIRED_POWER = MAX_POWER / 2.0F;
+    private final float MAX_POWER = 80.0F;
+    private final float REQUIRED_POWER = MAX_POWER / 2.0F;
     private float enginePower;
     public float gearLift;
     public boolean shouldGearLift = true;
     private final InterpValue rotationYawInterp = new InterpValue(this, 4f);
-    private static final float SPEEDMODIFIER = 2.5f;
+    private final float SPEEDMODIFIER = 2.5f;
     public boolean isFlying;
     public float rotorRotationAmount;
     public final InterpValue interpRotationPitch = new InterpValue(this, 0.25D);
@@ -46,7 +46,7 @@ public class HelicopterEntity extends CarEntity {
     private MutableVec3 direction;
     public float rotationAmount;
     public float sideRotationAmount;
-    private static final float MAXMOVEMENTROTATION = 15f;
+    private final float MAXMOVEMENTROTATION = 15f;
     private boolean shouldFallDamage;
     /* =================================== CAR START ===========================================*/
 
@@ -73,7 +73,8 @@ public class HelicopterEntity extends CarEntity {
         Seat frontLeft = new Seat(-0.55F, -0.34F, 0.1F, 0.5F, 0.25F);
         Seat frontRight = new Seat(0.55F, -0.34F, 0.1F, 0.5F, 0.25F);
         Seat backLeft = new Seat( 0.4F, 0.25F, -1F, 0.5F, 0.25F);
-        return new Seat[] { middle, frontLeft, frontRight, backLeft};
+        Seat backReft = new Seat( -0.4F, 0.25F, -1F, 0.5F, 0.25F);
+        return new Seat[] { middle, frontLeft, frontRight, backLeft, backReft};
     }
 
     @Override
@@ -184,9 +185,7 @@ public class HelicopterEntity extends CarEntity {
                     this.motionY = -5f;
                 }
 
-                if(this.onGround == true) {
-                    this.isFlying = false;
-                }
+
             } else {
                 if(!this.isFlying){
                     this.setNoGravity(false);
@@ -199,11 +198,14 @@ public class HelicopterEntity extends CarEntity {
 
         if(!this.isFlying){
             this.speedModifier = -0.75f;
-            this.rotorRotationAmount -= 0.2f;
         }else{
             this.speedModifier = 1.5f;
 
 
+        }
+        if(this.onGround == true) {
+            this.isFlying = false;
+            this.rotorRotationAmount -= 0.2f;
         }
         if(!this.shouldGearLift) {
             this.gearLift += 0.02f;
