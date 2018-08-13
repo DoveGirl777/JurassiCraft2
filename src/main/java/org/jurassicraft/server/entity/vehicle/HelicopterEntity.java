@@ -113,9 +113,9 @@ public class HelicopterEntity extends CarEntity {
         super.onEntityUpdate();
         //this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX-0.65f, this.posY+2f, this.posZ+ -2.9, 0.0f, 0.0f, 0.0f, new int[0]);
         //this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX+0.65f, this.posY+2f, this.posZ+ -2.9, 0.0f, 0.0f, 0.0f, new int[0]);
-        if (this.forward() && this.shouldGearLift) {
+        if (this.forward() && this.isFlying) {
             this.rotationAmount += 1f;
-        } else if (this.backward() && this.shouldGearLift) {
+        } else if (this.backward() && this.isFlying) {
             this.rotationAmount -= 1f;
         }else{
             if(this.rotationAmount < 0f){
@@ -124,9 +124,9 @@ public class HelicopterEntity extends CarEntity {
                 this.rotationAmount -= 1f;
             }
         }
-        if (this.left() && this.shouldGearLift) {
+        if (this.left() && this.isFlying) {
             this.sideRotationAmount += 1f;
-        } else if (this.right() && this.shouldGearLift) {
+        } else if (this.right() && this.isFlying) {
             this.sideRotationAmount -= 1f;
         }else{
             if(this.sideRotationAmount < 0f){
@@ -224,6 +224,9 @@ public class HelicopterEntity extends CarEntity {
         }
         if(this.rotorRotationAmount < 0f){
             this.rotorRotationAmount = 0f;
+        }
+        if(this.rotorRotationAmount > 4f){
+            this.rotorRotationAmount = 5f;
         }
         if(this.gearLift < -0.5f){
             this.gearLift = -0.5f;
