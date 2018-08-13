@@ -33,7 +33,7 @@ public class SetOrderMessage extends AbstractMessage<SetOrderMessage> {
             DinosaurEntity dinosaur = (DinosaurEntity) entity;
 
             if (dinosaur.getOwner() != null && dinosaur.getOwner().equals(player.getUniqueID())) {
-                dinosaur.setOrder(message.order);
+                dinosaur.setFieldOrder(message.order);
             }
         }
     }

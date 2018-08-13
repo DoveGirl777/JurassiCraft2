@@ -21,9 +21,10 @@ public final class LangUtils
     public static final TranslateKey LORE = new TranslateKey("lore.%s.name");
     public static final TranslateKey TAME = new TranslateKey("message.tame.name");
     public static final TranslateKey SET_ORDER = new TranslateKey("message.set_order.name");
+    public static final TranslateKey ORDER_VALUE = new TranslateKey("order.%s.name");
     public static final TranslateKey GENDER_CHANGE = new TranslateKey("%s.genderchange.name");
     public static final TranslateKey GUI = new TranslateKey("gui.%s.name");
-
+    public static final TranslateKey STATUS = new TranslateKey("status.%s.name");
     public static final TranslateKey ENTITY_NAME   = new TranslateKey("entity.%s.name");
     public static final TranslateKey ENTITY_DESC   = new TranslateKey("entity.%s.desc");
     public static final TranslateKey CONTAINER_INV = new TranslateKey("container.inventory");
@@ -86,10 +87,6 @@ public final class LangUtils
         return translate("attraction_sign." + (AttractionSignEntity.AttractionSignType.values()[stack.getItemDamage()].name().toLowerCase(Locale.ENGLISH)) + ".name");
     }
 
-    public static String getOrderName(DinosaurEntity.Order order) {
-        return "order." + order.name().toLowerCase(Locale.ENGLISH) + ".name";
-    }
-
     public static String getGenderMode(int mode) {
         String modeString = "";
         switch( mode ) {
@@ -106,10 +103,6 @@ public final class LangUtils
 
     public static String getPlantName(Plant plant) {
         return translate("plants." + (plant == null ? "null" : plant.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_")) + ".name");
-    }
-
-    public static String getStatusName(DinosaurStatus status) {
-        return "status." + status.name().toLowerCase(Locale.ENGLISH) + ".name";
     }
 
     public static final class TranslateKey

@@ -20,7 +20,7 @@ public class RespondToAttackEntityAI extends EntityAIBase {
     public boolean shouldExecute() {
         this.attacker = this.dinosaur.getAttackTarget();
         if(this.attacker != null) {
-            return this.dinosaur.canEntityBeSeen(this.attacker) && !(this.attacker instanceof DinosaurEntity && ((DinosaurEntity) this.attacker).isCarcass()) && !(this.attacker instanceof EntityPlayer && ((EntityPlayer) this.attacker).capabilities.isCreativeMode);
+            return this.dinosaur.canEntityBeSeen(this.attacker) && !this.attacker.isDead && !(this.attacker instanceof DinosaurEntity && ((DinosaurEntity) this.attacker).isCarcass()) && !(this.attacker instanceof EntityPlayer && ((EntityPlayer) this.attacker).capabilities.isCreativeMode);
         }
         return false;
     }

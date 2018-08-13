@@ -1,9 +1,5 @@
-*Fixed desyncing process bars for all machines
-*Fixed desyncing items when taken out of the output slots
-*Fixed client-side duplication bug with cleaning station
-*Fixed output slots accepting items from the player which isn't possible anymore
-*Fixed the feeders's default input slot -> Now upper left corner
-*Fixed a problem with herds losing their leader which crashed the game
-*Ensures dinosaurs do not remain angry after player leaves.
-*Improved some Dinosaur Targetting AI
-*Changed system to use LangUtils
++Added BungeeCord/Waterfall support
+*fixed tour rail config value
+*small fix for dinosaur attack AI
+*temporary fix for growth serum
+*Fixed cultivator's upper part to not drop a bugged item

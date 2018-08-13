@@ -9,6 +9,7 @@ import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.tree.TreeType;
+import org.jurassicraft.server.conf.JurassiCraftConfig;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.EntityHandler;
@@ -73,17 +74,18 @@ public class ItemHandler {
     public static final BasicItem LASER = new BasicItem(TabHandler.ITEMS);
 
     public static final Item GROWTH_SERUM = new EntityRightClickItem(interaction -> {
-	if (interaction.getTarget() instanceof DinosaurEntity) {
-            DinosaurEntity dinosaur = (DinosaurEntity) interaction.getTarget();
-            if (!dinosaur.isCarcass()) {
-                dinosaur.setFullyGrown();
-                interaction.getStack().shrink(1);
-                if (!interaction.getPlayer().capabilities.isCreativeMode) {
-                    interaction.getPlayer().inventory.addItemStackToInventory(new ItemStack(ItemHandler.EMPTY_SYRINGE));
+        if(!JurassiCraftConfig.ENTITIES.disableGrowthSerumRecipe)
+            if (interaction.getTarget() instanceof DinosaurEntity) {
+                DinosaurEntity dinosaur = (DinosaurEntity) interaction.getTarget();
+                if (!dinosaur.isCarcass()) {
+                    dinosaur.setFullyGrown();
+                    interaction.getStack().shrink(1);
+                    if (!interaction.getPlayer().capabilities.isCreativeMode) {
+                        interaction.getPlayer().inventory.addItemStackToInventory(new ItemStack(ItemHandler.EMPTY_SYRINGE));
+                    }
+                    return true;
                 }
-                return true;
             }
-        }
 	return false;
     }).setCreativeTab(TabHandler.ITEMS);
     
@@ -315,6 +317,7 @@ public class ItemHandler {
         registerItem(EMPTY_TEST_TUBE, "Empty Test Tube");
         registerItem(EMPTY_SYRINGE, "Empty Syringe");
         registerItem(GROWTH_SERUM, "Growth Serum");
+
         registerItem(BREEDING_WAND, "Breeding Wand");
         registerItem(BIRTHING_WAND, "Birthing_Wand");
         registerItem(PREGNANCY_TEST, "Pregnancy Test");

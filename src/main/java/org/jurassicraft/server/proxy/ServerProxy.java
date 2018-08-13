@@ -30,7 +30,6 @@ import org.jurassicraft.server.container.IncubatorContainer;
 import org.jurassicraft.server.container.SkeletonAssemblyContainer;
 import org.jurassicraft.server.datafixers.JurassiCraftDataFixers;
 import org.jurassicraft.server.entity.DinosaurEntity;
-import org.jurassicraft.server.entity.DinosaurSerializers;
 import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.entity.GoatEntity;
 import org.jurassicraft.server.entity.villager.VillagerHandler;
@@ -84,7 +83,6 @@ public class ServerProxy implements IGuiHandler {
 
     public void onPreInit(FMLPreInitializationEvent event) {
         EntityHandler.init();
-        DinosaurSerializers.register();
 
         FossilItem.init();
 
@@ -211,7 +209,7 @@ public class ServerProxy implements IGuiHandler {
     public void openSelectDino(BlockPos pos, EnumFacing facing, EnumHand hand) {
     }
 
-    public void openOrderGui(DinosaurEntity entity) {
+    public void openOrder(DinosaurEntity entity) {
     }
 
     public void openFieldGuide(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo fieldGuideInfo) {

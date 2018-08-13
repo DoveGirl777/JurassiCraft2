@@ -58,6 +58,7 @@ git clone https://github.com/<Your Username>/JurassiCraft2
 ```
 
 When that's done, go into the newly created directory `JurassiCraft2` and run in the console if you're on Windows:
+
 ```
 gradlew.bat setupDecompWorkspace
 ```
@@ -65,15 +66,9 @@ Or this when you're on any other operating system (Like Mac OS X and Ubuntu):
 ```
 ./gradlew setupDecompWorkspace
 ```
+... and append the name of the IDE you use - eclipse or idea:
 
-Then for Eclipse:
-```
-gradlew.bat eclipse
-```
-
-or for IntelliJ IDEA:
-```
-gradlew.bat idea
-```
+__Example for Windows and IDEA:__
+>gradlew.bat setupDecompWorkspace idea
 
 Now open the workspace and voilà, you can start contributing!

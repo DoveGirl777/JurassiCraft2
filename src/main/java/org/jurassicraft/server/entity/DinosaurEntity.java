@@ -103,6 +103,7 @@ import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.food.FoodType;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.message.BiPacketOrder;
 import org.jurassicraft.server.message.SetOrderMessage;
 import org.jurassicraft.server.util.GameRuleHandler;
 import org.jurassicraft.server.util.LangUtils;
@@ -114,6 +115,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
@@ -128,7 +130,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private static final DataParameter<Boolean> WATCHER_IS_SLEEPING = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> WATCHER_HAS_TRACKER = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<String> WATCHER_OWNER = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.STRING);
-    private static final DataParameter<Order> WATCHER_ORDER = EntityDataManager.createKey(DinosaurEntity.class, DinosaurSerializers.ORDER);
+    private static final DataParameter<Byte> WATCHER_ORDER = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BYTE);
     private static final DataParameter<Boolean> WATCHER_IS_RUNNING = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
 
     private final InventoryDinosaur inventory;
@@ -590,7 +592,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.dataManager.register(WATCHER_IS_SLEEPING, this.isSleeping);
         this.dataManager.register(WATCHER_HAS_TRACKER, this.hasTracker);
         this.dataManager.register(WATCHER_OWNER, "");
-        this.dataManager.register(WATCHER_ORDER, Order.WANDER);
+        this.dataManager.register(WATCHER_ORDER, (byte) 0);
         this.dataManager.register(WATCHER_IS_RUNNING, false);
     }
 
@@ -1003,7 +1005,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.dataManager.set(WATCHER_IS_SLEEPING, this.isSleeping);
             this.dataManager.set(WATCHER_IS_CARCASS, this.isCarcass);
             this.dataManager.set(WATCHER_HAS_TRACKER, this.hasTracker);
-            this.dataManager.set(WATCHER_ORDER, this.order);
+            this.dataManager.set(WATCHER_ORDER, (byte) this.order.ordinal());
             this.dataManager.set(WATCHER_OWNER, this.owner != null ? this.owner.toString() : "");
             this.dataManager.set(WATCHER_IS_RUNNING, this.getAIMoveSpeed() > this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
         } else {
@@ -1013,7 +1015,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.isSleeping = this.dataManager.get(WATCHER_IS_SLEEPING);
             this.isCarcass = this.dataManager.get(WATCHER_IS_CARCASS);
             this.hasTracker = this.dataManager.get(WATCHER_HAS_TRACKER);
-            this.order = this.dataManager.get(WATCHER_ORDER);
+            this.order = Order.values()[this.dataManager.get(WATCHER_ORDER)];
 
             String owner = this.dataManager.get(WATCHER_OWNER);
 
@@ -1219,7 +1221,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         } else {
             if (stack.isEmpty() && hand == EnumHand.MAIN_HAND && this.world.isRemote) {
                 if (this.isOwner(player)) {
-                    JurassiCraft.PROXY.openOrderGui(this);
+                	JurassiCraft.NETWORK_WRAPPER.sendToServer(new BiPacketOrder(this));
                 } else {
                     player.sendMessage(new TextComponentTranslation("message.not_owned.name"));
                 }
@@ -1741,16 +1743,22 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public Order getOrder() {
         return this.order;
     }
+    
+    public void setFieldOrder(Order order) {
+    	
+        this.order = order;
+    	this.dataManager.set(WATCHER_ORDER, (byte) order.ordinal());
+    	
+    }
 
     public void setOrder(Order order) {
-        this.order = order;
 
         if (this.world.isRemote) {
             if (this.owner != null) {
                 EntityPlayer player = this.world.getPlayerEntityByUUID(this.owner);
 
                 if (player != null) {
-                    player.sendMessage(new TextComponentString(LangUtils.translate(LangUtils.SET_ORDER).replace("{order}", LangUtils.getOrderName(order))));
+                    player.sendMessage(new TextComponentString(LangUtils.translate(LangUtils.SET_ORDER).replace("{order}", LangUtils.translate(LangUtils.ORDER_VALUE.get(order.name().toLowerCase(Locale.ENGLISH))))));
                 }
             }
 

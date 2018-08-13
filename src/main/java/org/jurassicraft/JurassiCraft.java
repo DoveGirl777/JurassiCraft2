@@ -20,7 +20,7 @@ import org.jurassicraft.server.proxy.ServerProxy;
 public class JurassiCraft {
     public static final String MODID = "jurassicraft";
     public static final String NAME = "JurassiCraft";
-    public static final String VERSION = "2.1.13 ";
+    public static final String VERSION = "2.1.14 ";
 
     public static final String LLIBRARY_VERSION = "1.7.14";
     @SidedProxy(serverSide = "org.jurassicraft.server.proxy.ServerProxy", clientSide = "org.jurassicraft.client.proxy.ClientProxy")

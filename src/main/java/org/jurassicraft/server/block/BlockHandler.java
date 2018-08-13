@@ -127,10 +127,13 @@ public class BlockHandler
     public static final SwarmBlock PLANKTON_SWARM = new SwarmBlock(() -> ItemHandler.PLANKTON);
     public static final SwarmBlock KRILL_SWARM = new SwarmBlock(() -> ItemHandler.KRILL);
 
+
+
     public static final TourRailBlock TOUR_RAIL = new TourRailBlock(TourRailBlock.SpeedType.NONE);
     public static final TourRailBlock TOUR_RAIL_SLOW = new TourRailBlock(TourRailBlock.SpeedType.SLOW);
     public static final TourRailBlock TOUR_RAIL_MEDIUM = new TourRailBlock(TourRailBlock.SpeedType.MEDIUM);
     public static final TourRailBlock TOUR_RAIL_FAST = new TourRailBlock(TourRailBlock.SpeedType.FAST);
+
 
     public static final SkeletonAssemblyBlock SKELETON_ASSEMBLY = new SkeletonAssemblyBlock();
 

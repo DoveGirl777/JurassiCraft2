@@ -110,7 +110,7 @@ public class FieldGuideGui extends GuiScreen {
             this.drawCenteredScaledString(LangUtils.translate(LangUtils.GUI.get("health")), statisticTextX, y + 35, 1.0F, 0);
             this.drawCenteredScaledString(LangUtils.translate(LangUtils.GUI.get("hunger")), statisticTextX, y + 65, 1.0F, 0);
             this.drawCenteredScaledString(LangUtils.translate(LangUtils.GUI.get("thirst")), statisticTextX, y + 95, 1.0F, 0);
-            this.drawCenteredScaledString(LangUtils.translate(LangUtils.GUI.get("age.name")), statisticTextX, y + 125, 1.0F, 0);
+            this.drawCenteredScaledString(LangUtils.translate(LangUtils.GUI.get("age")), statisticTextX, y + 125, 1.0F, 0);
 
             this.mc.getTextureManager().bindTexture(WIDGETS_TEXTURE);
 
@@ -119,7 +119,7 @@ public class FieldGuideGui extends GuiScreen {
             this.drawBar(statisticsX, y + 105, this.fieldGuideInfo.thirst, this.entity.getMetabolism().getMaxWater(), 0x0000FF);
             this.drawBar(statisticsX, y + 135, this.entity.getDinosaurAge(), dinosaur.getMaximumAge(), 0x00FF00);
 
-            this.drawCenteredScaledString(LangUtils.translate(LangUtils.GUI.get("days_old.name")).replace("{value}", String.valueOf(this.entity.getDaysExisted())), statisticTextX, y + 155, 1.0F, 0);
+            this.drawCenteredScaledString(LangUtils.translate(LangUtils.GUI.get("days_old")).replace("{value}", String.valueOf(this.entity.getDaysExisted())), statisticTextX, y + 155, 1.0F, 0);
 
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
@@ -160,7 +160,7 @@ public class FieldGuideGui extends GuiScreen {
                 int renderY = statusY + y + (SIZE_Y - 40);
 
                 if (mouseX >= renderX && mouseY >= renderY && mouseX <= renderX + size && mouseY <= renderY + size) {
-                    this.drawHoveringText(LangUtils.getStatusName(status), mouseX, mouseY);
+                    this.drawHoveringText(LangUtils.translate(LangUtils.STATUS.get(status.name().toLowerCase(Locale.ENGLISH))), mouseX, mouseY);
                 }
 
                 statusX += 18;

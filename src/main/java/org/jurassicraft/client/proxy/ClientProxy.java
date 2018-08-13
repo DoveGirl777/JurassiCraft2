@@ -145,7 +145,7 @@ public class ClientProxy extends ServerProxy {
     }
 
     @Override
-    public void openOrderGui(DinosaurEntity entity) {
+    public void openOrder(DinosaurEntity entity) {
         MC.displayGuiScreen(new OrderDinosaurGui(entity));
     }
 

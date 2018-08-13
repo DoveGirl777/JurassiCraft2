@@ -12,6 +12,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+
+import java.util.Random;
+
 import org.jurassicraft.server.block.BlockHandler;
 
 public class CultivatorTopBlock extends CultivatorBlock {
@@ -29,6 +32,11 @@ public class CultivatorTopBlock extends CultivatorBlock {
 
         Block block = item instanceof ItemBlock ? getBlockFromItem(item) : this;
         return new ItemStack(item, 1, block.getMetaFromState(world.getBlockState(pos)));
+    }
+    
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+    	return Item.getItemFromBlock(BlockHandler.CULTIVATOR_BOTTOM);
     }
 
     @Override

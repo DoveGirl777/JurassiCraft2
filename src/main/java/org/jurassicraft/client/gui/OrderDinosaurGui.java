@@ -44,6 +44,7 @@ public class OrderDinosaurGui extends GuiScreen {
     @Override
     public void actionPerformed(GuiButton button) {
         DinosaurEntity.Order order = DinosaurEntity.Order.values()[button.id];
+        this.entity.setFieldOrder(order);
         this.entity.setOrder(order);
 
         this.mc.displayGuiScreen(null);

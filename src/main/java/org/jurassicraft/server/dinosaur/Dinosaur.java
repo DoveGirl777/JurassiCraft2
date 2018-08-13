@@ -298,7 +298,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
     public void disableRegistry() {
         this.shouldRegister = false;
     }
-    
+
     public MovementType getMovementType() {
         return movementType;
     }
