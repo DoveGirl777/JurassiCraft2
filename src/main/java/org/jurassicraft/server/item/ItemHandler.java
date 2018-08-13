@@ -190,7 +190,7 @@ public class ItemHandler {
     public static final BasicItem STAMP_SET = new BasicItem(TabHandler.ITEMS);
 
     public static final BasicItem CAR_CHASSIS = new BasicItem(TabHandler.ITEMS);
-    public static final BasicItem CAR_ENGINE_SYSTEM = new BasicItem(TabHandler.ITEMS);
+    public static final BasicItem ENGINE_SYSTEM = new BasicItem(TabHandler.ITEMS);
     public static final BasicItem CAR_SEATS = new BasicItem(TabHandler.ITEMS);
     public static final BasicItem CAR_TIRE = new BasicItem(TabHandler.ITEMS);
     public static final BasicItem CAR_WINDSCREEN = new BasicItem(TabHandler.ITEMS);
@@ -397,7 +397,7 @@ public class ItemHandler {
         registerItem(MEALWORM_BEETLES, "Mealworm Beetles");
 
         registerItem(CAR_CHASSIS, "Car Chassis");
-        registerItem(CAR_ENGINE_SYSTEM, "Car Engine System");
+        registerItem(ENGINE_SYSTEM, "Engine System");
         registerItem(CAR_SEATS, "Car Seats");
         registerItem(CAR_TIRE, "Car Tire");
         registerItem(CAR_WINDSCREEN, "Car Windscreen");

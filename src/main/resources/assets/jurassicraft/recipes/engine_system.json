@@ -1,26 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "jurassicraft:car_engine_system",
+  "group": "jurassicraft:engine_system",
   "pattern": [
     "ABC",
     "DEF",
-    "GHC"
+    "AGH"
   ],
   "key": {
     "H": {
-      "item": "minecraft:stone_pressure_plate",
-      "data": 0
-    },
-    "D": {
-      "item": "minecraft:cauldron",
-      "data": 0
-    },
-    "C": {
-      "item": "minecraft:iron_bars",
+      "item": "minecraft:piston",
       "data": 0
     },
     "A": {
-      "item": "minecraft:lever",
+      "item": "minecraft:iron_bars",
+      "data": 0
+    },
+    "F": {
+      "item": "minecraft:cauldron",
       "data": 0
     },
     "E": {
@@ -28,20 +24,24 @@
       "data": 0
     },
     "G": {
-      "item": "minecraft:piston",
+      "item": "minecraft:stone_pressure_plate",
       "data": 0
     },
     "B": {
       "item": "minecraft:iron_ingot",
       "data": 0
     },
-    "F": {
+    "D": {
       "item": "minecraft:comparator",
+      "data": 0
+    },
+    "C": {
+      "item": "minecraft:lever",
       "data": 0
     }
   },
   "result": {
-    "item": "jurassicraft:car_engine_system",
+    "item": "jurassicraft:engine_system",
     "data": 0
   }
 }

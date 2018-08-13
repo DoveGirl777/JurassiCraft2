@@ -32,7 +32,7 @@
         },
         {
           "type": "item",
-          "name": "jurassicraft:car_engine_system",
+          "name": "jurassicraft:engine_system",
           "weight": 5,
           "functions": [
             {"function": "set_count", "count": {"min": 0, "max": 5}}

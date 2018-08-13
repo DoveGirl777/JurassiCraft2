@@ -335,7 +335,7 @@ public enum RenderingHandler {
         registerItemRenderer(FIELD_GUIDE, "field_guide");
 
         registerItemRenderer(CAR_CHASSIS, "car_chassis");
-        registerItemRenderer(CAR_ENGINE_SYSTEM, "car_engine_system");
+        registerItemRenderer(ENGINE_SYSTEM, "engine_system");
         registerItemRenderer(CAR_SEATS, "car_seats");
         registerItemRenderer(CAR_TIRE, "car_tire");
         registerItemRenderer(CAR_WINDSCREEN, "car_windscreen");

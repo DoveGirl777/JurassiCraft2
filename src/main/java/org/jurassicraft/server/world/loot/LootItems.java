@@ -21,7 +21,7 @@ public class LootItems {
             Items.DIAMOND, 0, 2,
             ItemHandler.CAR_TIRE, 0, 12,
             ItemHandler.CAR_CHASSIS, 0, 2,
-            ItemHandler.CAR_ENGINE_SYSTEM, 0, 3,
+            ItemHandler.ENGINE_SYSTEM, 0, 3,
             ItemHandler.BASIC_CIRCUIT, 0, 32,
             ItemHandler.EMPTY_TEST_TUBE, 0, 64,
             ItemHandler.EMPTY_SYRINGE, 0, 64,
@@ -131,7 +131,7 @@ public class LootItems {
     public static final Object[] BASIC_GARAGE = new Object[] {
             ItemHandler.CAR_TIRE, 0, 8,
             ItemHandler.CAR_SEATS, 0, 2,
-            ItemHandler.CAR_ENGINE_SYSTEM, 0, 5,
+            ItemHandler.ENGINE_SYSTEM, 0, 5,
             ItemHandler.BASIC_CIRCUIT, 0, 16,
             ItemHandler.CAR_CHASSIS, 0, 2,
             ItemHandler.UNFINISHED_CAR, 0, 1,

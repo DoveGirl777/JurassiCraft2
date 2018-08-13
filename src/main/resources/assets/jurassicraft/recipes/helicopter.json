@@ -1,26 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "jurassicraft:car_engine_system",
+  "group": "jurassicraft:helicopter",
   "pattern": [
-    "ABC",
+    "HBD",
     "DEF",
-    "AGH"
+    "HDH"
   ],
   "key": {
     "H": {
-      "item": "minecraft:piston",
-      "data": 0
-    },
-    "A": {
-      "item": "minecraft:iron_bars",
+      "item": "jurassicraft:car_tire",
       "data": 0
     },
     "F": {
-      "item": "minecraft:cauldron",
+      "item": "jurassicraft:car_windscreen",
       "data": 0
     },
     "E": {
-      "item": "minecraft:repeater",
+      "item": "jurassicraft:engine_system",
       "data": 0
     },
     "G": {
@@ -28,20 +24,20 @@
       "data": 0
     },
     "B": {
-      "item": "minecraft:iron_ingot",
+      "item": "jurassicraft:iron_blades",
       "data": 0
     },
     "D": {
-      "item": "minecraft:comparator",
+      "item": "minecraft:iron_block",
       "data": 0
     },
     "C": {
-      "item": "minecraft:lever",
+      "item": "minecraft:dye",
       "data": 0
     }
   },
   "result": {
-    "item": "jurassicraft:car_engine_system",
+    "item": "jurassicraft:helicopter",
     "data": 0
   }
 }
