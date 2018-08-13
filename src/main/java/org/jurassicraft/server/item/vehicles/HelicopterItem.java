@@ -24,6 +24,7 @@ public class HelicopterItem extends Item {
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
         super.addInformation(stack, world, tooltip, tooltipFlag);
         tooltip.add("Right click on a block to spawn the helicopter");
+        this.setUnlocalizedName("helicopter");
     }
 
     @Override

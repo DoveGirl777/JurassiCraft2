@@ -1,43 +1,39 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "group": "jurassicraft:helicopter",
-  "pattern": [
-    "HBD",
+  "type":"minecraft:crafting_shaped",
+  "group":"jurassicraft:helicopter",
+  "pattern":[
+    "ABC",
     "DEF",
-    "HDH"
+    "ADA"
   ],
-  "key": {
-    "H": {
-      "item": "jurassicraft:car_tire",
-      "data": 0
+  "key":{
+    "A":{
+      "item":"jurassicraft:car_tire",
+      "data":0
     },
-    "F": {
-      "item": "jurassicraft:car_windscreen",
-      "data": 0
+    "B":{
+      "item":"jurassicraft:iron_blades",
+      "data":0
     },
-    "E": {
-      "item": "jurassicraft:engine_system",
-      "data": 0
+    "C":{
+      "item":"minecraft:dye",
+      "data":2
     },
-    "G": {
-      "item": "minecraft:stone_pressure_plate",
-      "data": 0
+    "D":{
+      "item":"minecraft:iron_block",
+      "data":0
     },
-    "B": {
-      "item": "jurassicraft:iron_blades",
-      "data": 0
+    "E":{
+      "item":"jurassicraft:engine_system",
+      "data":0
     },
-    "D": {
-      "item": "minecraft:iron_block",
-      "data": 0
-    },
-    "C": {
-      "item": "minecraft:dye",
-      "data": 0
+    "F":{
+      "item":"jurassicraft:car_windscreen",
+      "data":0
     }
   },
-  "result": {
-    "item": "jurassicraft:helicopter",
-    "data": 0
+  "result":{
+    "item":"jurassicraft:helicopter",
+    "data":0
   }
 }

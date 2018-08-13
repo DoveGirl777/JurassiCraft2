@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.block.BlockHandler;
@@ -427,7 +428,6 @@ public class ItemHandler {
         registerItem(DART_POISON_CYCASIN, "Dart Poison Cycasin");
         registerItem(DART_POISON_EXECUTIONER_CONCOCTION, "Dart Poison Executioner Concoction");
         registerItem(DART_TIPPED_POTION, "Dart Tipped Potion");
-        
         for (TreeType type : TreeType.values()) {
             registerTreeType(type);
         }
