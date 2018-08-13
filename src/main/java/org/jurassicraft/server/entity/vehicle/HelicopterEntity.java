@@ -48,6 +48,7 @@ public class HelicopterEntity extends CarEntity {
     public float sideRotationAmount;
     private final float MAXMOVEMENTROTATION = 15f;
     private boolean shouldFallDamage;
+    public double rotAmount = 0D;
     /* =================================== CAR START ===========================================*/
 
     public HelicopterEntity(World worldIn) {
@@ -191,7 +192,7 @@ public class HelicopterEntity extends CarEntity {
                     this.setNoGravity(false);
 
                 }else{
-                    this.rotorRotationAmount += 0.1f;
+                    this.rotorRotationAmount += 5f;
                 }
             }
         }
@@ -206,6 +207,8 @@ public class HelicopterEntity extends CarEntity {
         if(this.onGround == true) {
             this.isFlying = false;
             this.rotorRotationAmount -= 0.2f;
+        }else{
+            this.rotorRotationAmount += 5f;
         }
         if(!this.shouldGearLift) {
             this.gearLift += 0.02f;
@@ -227,8 +230,8 @@ public class HelicopterEntity extends CarEntity {
         if(this.rotorRotationAmount < 0f){
             this.rotorRotationAmount = 0f;
         }
-        if(this.rotorRotationAmount > 4f){
-            this.rotorRotationAmount = 5f;
+        if(this.rotorRotationAmount > 1.5f){
+            this.rotorRotationAmount = 1.5f;
         }
         if(this.gearLift < -0.5f){
             this.gearLift = -0.5f;
@@ -236,6 +239,7 @@ public class HelicopterEntity extends CarEntity {
         if(this.gearLift > 0){
             this.gearLift = 0f;
         }
+        this.rotAmount += this.rotorRotationAmount / 2d;
     }
 
     @Override

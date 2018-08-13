@@ -14,14 +14,13 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class HelicopterAnimator implements ITabulaModelAnimator<HelicopterEntity> {
 
-    double rotAmount = 0D;
-
     @Override
     public void setRotationAngles(TabulaModel model, HelicopterEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks) {
         AdvancedModelRenderer rotor = model.getCube("rotorbase_rotatehere");
         AdvancedModelRenderer tailrotor = model.getCube("tailrotor_rotatehere");
-        rotor.rotateAngleY = entity.rotorRotationAmount / 2F;
-        tailrotor.rotateAngleX = entity.rotorRotationAmount / 2F;
+
+        rotor.rotateAngleY = (float)entity.rotAmount;
+        tailrotor.rotateAngleX = (float)entity.rotAmount;
         AdvancedModelRenderer ctrl1 = model.getCube("controlstick1");
         AdvancedModelRenderer ctrl2 = model.getCube("controlstick2");
         AdvancedModelRenderer gearL1 = model.getCube("gearL1");
