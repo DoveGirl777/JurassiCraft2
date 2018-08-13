@@ -4,6 +4,7 @@ import net.ilexiconn.llibrary.client.model.tabula.ITabulaModelAnimator;
 import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.entity.vehicle.HelicopterEntity;
@@ -29,6 +30,12 @@ public class HelicopterAnimator implements ITabulaModelAnimator<HelicopterEntity
         AdvancedModelRenderer gearR1 = model.getCube("gearR1");
         AdvancedModelRenderer gearR2 = model.getCube("gearR2");
         AdvancedModelRenderer gearFront = model.getCube("gearFront1");
+        AdvancedModelRenderer exhaustL = model.getCube("body79");
+        AdvancedModelRenderer exhaustR = model.getCube("body80");
+        System.out.println(exhaustL.defaultPositionX);
+        System.out.println(exhaustL.defaultPositionY);
+        System.out.println(exhaustL.defaultPositionZ);
+
         //if (entity.isEngineRunning()) {
          //   ctrl1.offsetY = 0.01F;
          //   ctrl2.offsetY = -0.01F;

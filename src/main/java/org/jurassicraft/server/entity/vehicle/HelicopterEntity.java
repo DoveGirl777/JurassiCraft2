@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.model.BlockStateLoader;
 import net.minecraftforge.client.model.b3d.B3DModel;
@@ -46,6 +47,7 @@ public class HelicopterEntity extends CarEntity {
     public float rotationAmount;
     public float sideRotationAmount;
     private static final float MAXMOVEMENTROTATION = 15f;
+    private boolean shouldFallDamage;
     /* =================================== CAR START ===========================================*/
 
     public HelicopterEntity(World worldIn) {
@@ -53,8 +55,8 @@ public class HelicopterEntity extends CarEntity {
         double w = 5f; // width in blocks
         double h = 3.5f; // height in blocks
         double d = 8f; // depth in blocks
-        this.setEntityBoundingBox(new AxisAlignedBB( 5, 0, 0, w, h, d));
-        this.setSize(4f, 3.5f);
+        this.setEntityBoundingBox(new AxisAlignedBB( 0, 0, 0, w, h, d));
+        this.setSize(5f, 3.5f);
         this.speedModifier = 1.5f;
         this.isFlying = false;
         this.direction = new MutableVec3(0,1,0);
@@ -109,9 +111,11 @@ public class HelicopterEntity extends CarEntity {
     @Override
     public void onEntityUpdate() {
         super.onEntityUpdate();
-        if (this.forward()) {
+        //this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX-0.65f, this.posY+2f, this.posZ+ -2.9, 0.0f, 0.0f, 0.0f, new int[0]);
+        //this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX+0.65f, this.posY+2f, this.posZ+ -2.9, 0.0f, 0.0f, 0.0f, new int[0]);
+        if (this.forward() && this.shouldGearLift) {
             this.rotationAmount += 1f;
-        } else if (this.backward()) {
+        } else if (this.backward() && this.shouldGearLift) {
             this.rotationAmount -= 1f;
         }else{
             if(this.rotationAmount < 0f){
@@ -120,9 +124,9 @@ public class HelicopterEntity extends CarEntity {
                 this.rotationAmount -= 1f;
             }
         }
-        if (this.left()) {
+        if (this.left() && this.shouldGearLift) {
             this.sideRotationAmount += 1f;
-        } else if (this.right()) {
+        } else if (this.right() && this.shouldGearLift) {
             this.sideRotationAmount -= 1f;
         }else{
             if(this.sideRotationAmount < 0f){
@@ -171,6 +175,7 @@ public class HelicopterEntity extends CarEntity {
                 }
 
                 this.isFlying = true;
+                this.shouldFallDamage = true;
                 this.rotorRotationAmount += 0.1f;
                 this.setNoGravity(true);
             } else if (KeyBindingHandler.HELICOPTER_DOWN.isKeyDown()) {
@@ -212,6 +217,10 @@ public class HelicopterEntity extends CarEntity {
         }
         if(this.seats[0].getOccupant() == null){
             this.setNoGravity(false);
+        }
+        if(this.seats[0].getOccupant() == null && this.onGround == true && this.shouldFallDamage == true){
+            this.setHealth(this.getHealth() - 20);
+            this.shouldFallDamage = false;
         }
         if(this.rotorRotationAmount < 0f){
             this.rotorRotationAmount = 0f;
